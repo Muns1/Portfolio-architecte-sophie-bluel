@@ -124,6 +124,13 @@ button:hover {
     text-decoration: underline;
 }
 
+#error-message {
+    color: red;
+    font-weight: 700;
+    display: none;
+    margin-top: 15px;
+}
+
 /* Footer */
 footer {
     text-align: right;

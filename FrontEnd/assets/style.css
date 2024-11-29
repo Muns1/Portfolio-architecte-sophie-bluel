@@ -189,6 +189,22 @@ footer nav ul {
 
 /* CSS fait */
 
+/* Mode édition black bar */
+
+#mode-edition {
+	background-color: black;
+	color: white;
+	text-align: center;
+	padding: 20px 0;
+	font-size: 16px;
+	font-weight: 400;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 9999;
+  }
+
 #filters {
     display: flex;
     gap: 10px;
@@ -222,4 +238,8 @@ footer nav ul {
 
 .gallery {
 	margin-top: 50px;
+}
+
+#fa-pen-to-square {
+	font-size: 15px;
 }

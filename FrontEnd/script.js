@@ -56,3 +56,4 @@ function displayWorks(works) {
         gallery.appendChild(workItem);
     });
 }
+
