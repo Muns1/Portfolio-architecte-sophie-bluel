@@ -192,13 +192,15 @@ footer nav ul {
 /* Mode édition black bar */
 
 #mode-edition {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
     margin: 0;
     padding: 10px 0;
     background-color: black;
     color: white;
     text-align: center;
-    width: 100%;
-    position: relative;
 }
 
 #filters {
@@ -290,7 +292,7 @@ footer nav ul {
 }
 
 
-.gallery {
+.modal-gallery {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 10px;
@@ -299,7 +301,7 @@ footer nav ul {
     justify-items: center;
 }
 
-.gallery img {
+.modal-gallery img {
     width: 100%;
     height: auto;
 }

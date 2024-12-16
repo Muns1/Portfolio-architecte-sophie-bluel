@@ -1,3 +1,5 @@
+import { urlBackend } from "./services/variables.js";
+
 // Wait for HTML content before fetchworks
 document.addEventListener('DOMContentLoaded', () => {
     fetchWorks();
@@ -6,10 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
 // Fetch Backend Data
 async function fetchWorks() {
     try {
-        const response = await fetch('http://localhost:5678/api/works');
+        const response = await fetch(`${urlBackend}/api/works`);
         const works = await response.json();
         createFilters(works);
-        displayWorks(works);
+        displayWorksInHomepage(works);
+        displayWorksInModal(works);
     } catch (error) {
         console.error('Error fetching works:', error);
     }
@@ -32,10 +35,10 @@ function createFilters(works) {
         button.dataset.id = category.id;
         button.addEventListener('click', () => {
             if (category.id === 'all') {
-                displayWorks(works);
+                displayWorksInHomepage(works);
             } else {
                 const filteredWorks = works.filter(work => work.categoryId === category.id);
-                displayWorks(filteredWorks);
+                displayWorksInHomepage(filteredWorks);
             }
         });
         filtersContainer.appendChild(button);
@@ -43,17 +46,29 @@ function createFilters(works) {
 }
 
 // Displaying works
-function displayWorks(works) {
-    const gallery = document.querySelector('.gallery');
-    gallery.innerHTML = '';
+const homepageGallery = document.querySelector('.gallery');
+const modalGallery = document.querySelector('.modal-gallery');
 
+function displayWorksInHomepage(works) {
+    homepageGallery.innerHTML =
     works.forEach(work => {
-        const workItem = document.createElement('figure');
-        workItem.innerHTML = `
+        const figure = document.createElement('figure');
+        figure.innerHTML = `
             <img src="${work.imageUrl}" alt="${work.title}">
             <figcaption>${work.title}</figcaption>
         `;
-        gallery.appendChild(workItem);
+        homepageGallery.appendChild(figure);
+    });
+}
+
+function displayWorksInModal(works) {
+    modalGallery.innerHTML = '';
+    works.forEach(work => {
+        const figure = document.createElement('figure');
+        figure.innerHTML = `
+            <img src="${work.imageUrl}" alt="${work.title}">
+        `;
+        modalGallery.appendChild(figure);
     });
 }
 
@@ -81,3 +96,4 @@ window.addEventListener('click', function(event) {
 });
 
 modifierBtn.addEventListener('click', openModal);
+

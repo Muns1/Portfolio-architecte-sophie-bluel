@@ -1,3 +1,5 @@
+import { urlBackend } from "./services/variables";
+
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("login-form");
     const errorMessage = document.getElementById("error-message");
@@ -11,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
       errorMessage.style.display = "none";
   
       try {
-        const response = await fetch("http://localhost:5678/api/users/login", {
+        const response = await fetch(`${urlBackend}/api/users/login`, {
           method: "POST",
           headers: {"Content-Type": "application/json" },
           body: JSON.stringify({ email, password }),
@@ -34,4 +36,3 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
-  
