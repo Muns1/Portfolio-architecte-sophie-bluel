@@ -50,7 +50,7 @@ const homepageGallery = document.querySelector('.gallery');
 const modalGallery = document.querySelector('.modal-gallery');
 
 function displayWorksInHomepage(works) {
-    homepageGallery.innerHTML =
+    homepageGallery.innerHTML = '';
     works.forEach(work => {
         const figure = document.createElement('figure');
         figure.innerHTML = `
@@ -63,14 +63,34 @@ function displayWorksInHomepage(works) {
 
 function displayWorksInModal(works) {
     modalGallery.innerHTML = '';
+
     works.forEach(work => {
         const figure = document.createElement('figure');
+        figure.style.position = 'relative';
+
         figure.innerHTML = `
             <img src="${work.imageUrl}" alt="${work.title}">
         `;
+
+        const trashIcon = document.createElement('i');
+        trashIcon.className = 'fa-solid fa-trash-can';
+
+        trashIcon.addEventListener('click', async () => {
+            const confirmation = confirm("Êtes vous sûr de vouloir supprimer cette photo?");
+            if (confirmation) {
+                await deleteWork(work.id);
+            }
+        });
+
+        figure.appendChild(trashIcon);
         modalGallery.appendChild(figure);
     });
 }
+
+async function deleteWork(workId) {
+    const token = localStorage.getItem("authToken");
+}
+
 
 // Open/Close Modal
 const modal = document.getElementById('modal');

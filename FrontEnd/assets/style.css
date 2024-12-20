@@ -332,3 +332,23 @@ footer nav ul {
 .add-photo:hover {
     background-color: #01473c;
 }
+
+/* Modal Trash */
+
+.fa-trash-can {
+	position: absolute;
+	top: 6px;
+	right: 6px;
+	color: white;
+	background-color: black;
+	padding: 4px;
+	border-radius: 2px;
+    font-size: 9px;
+	cursor: pointer;
+    transition: color 0.3s ease;
+
+}
+
+.fa-trash-can:hover {
+    color: rgb(247, 68, 68);
+}
