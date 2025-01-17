@@ -1,4 +1,4 @@
-import { urlBackend } from "./services/variables";
+import { urlBackend } from "./services/variables.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("login-form");

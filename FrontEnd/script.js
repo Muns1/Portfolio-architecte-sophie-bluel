@@ -10,7 +10,7 @@ async function fetchWorks() {
     try {
         const response = await fetch(`${urlBackend}/api/works`);
         const works = await response.json();
-        createFilters(works);
+        await createFilters(works);
         displayWorksInHomepage(works);
         displayWorksInModal(works);
     } catch (error) {
@@ -19,30 +19,39 @@ async function fetchWorks() {
 }
 
 // Dynamic Filter button creation
-function createFilters(works) {
-    const filtersContainer = document.querySelector('#filters');
-    const categories = [
-        { id: 'all', name: 'Tous' },
-        { id: 1, name: 'Objets' },
-        { id: 2, name: 'Appartements' },
-        { id: 3, name: 'Hotels & Restaurants' }
-    ];
+async function createFilters(works) {
+    try {
+        const response = await fetch(`${urlBackend}/api/categories`);
+        if (!response.ok) {
+            throw new Error("Failed to fetch categories");
+        }
+        const categories = await response.json();
 
-    // Button creation for each category
-    categories.forEach(category => {
-        const button = document.createElement('button');
-        button.textContent = category.name;
-        button.dataset.id = category.id;
-        button.addEventListener('click', () => {
-            if (category.id === 'all') {
-                displayWorksInHomepage(works);
-            } else {
-                const filteredWorks = works.filter(work => work.categoryId === category.id);
-                displayWorksInHomepage(filteredWorks);
-            }
+        // Add "All" category manually
+        const allCategory = { id: 'all', name: 'Tous' };
+        const allCategories = [allCategory, ...categories];
+
+        const filtersContainer = document.querySelector('#filters');
+        filtersContainer.innerHTML = '';
+
+        // Create filter buttons dynamically
+        allCategories.forEach(category => {
+            const button = document.createElement('button');
+            button.textContent = category.name;
+            button.dataset.id = category.id;
+            button.addEventListener('click', () => {
+                if (category.id === 'all') {
+                    displayWorksInHomepage(works);
+                } else {
+                    const filteredWorks = works.filter(work => work.categoryId === category.id);
+                    displayWorksInHomepage(filteredWorks);
+                }
+            });
+            filtersContainer.appendChild(button);
         });
-        filtersContainer.appendChild(button);
-    });
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+    }
 }
 
 // Displaying works
@@ -89,6 +98,30 @@ function displayWorksInModal(works) {
 
 async function deleteWork(workId) {
     const token = localStorage.getItem("authToken");
+
+    if (!token) {
+        console.error("Unauthorized: No token found.");
+        return;
+    }
+
+    try {
+        const response = await fetch(`${urlBackend}/api/works/${workId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Accept': '*/*'
+            }
+        });
+
+        if (response.ok) {
+            console.log("Image supprimé!");
+            fetchWorks();
+        } else {
+            console.error(`Erreur de la suppression d'image. Status: ${response.status}`);
+        }
+    } catch (error) {
+        console.error("Erreur de la suppression d'image:", error);
+    }
 }
 
 
@@ -116,4 +149,54 @@ window.addEventListener('click', function(event) {
 });
 
 modifierBtn.addEventListener('click', openModal);
+
+
+
+const addPhotoBtn = document.getElementById('add-photo-btn'); 
+const addPhotoModal = document.getElementById('add-photo-modal');
+const addPhotoModalClose = document.getElementById('add-photo-modal-close');
+
+
+addPhotoBtn.addEventListener('click', () => {
+  addPhotoModal.classList.add('show');
+});
+
+
+addPhotoModalClose.addEventListener('click', () => {
+  addPhotoModal.classList.remove('show');
+});
+
+
+window.addEventListener('click', (event) => {
+  if (event.target === addPhotoModal) {
+    addPhotoModal.classList.remove('show');
+  }
+});
+
+async function populateCategories() {
+    try {
+      const response = await fetch(`${urlBackend}/api/categories`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch categories");
+      }
+      const categories = await response.json();
+  
+      const categoryDropdown = document.getElementById('category');
+      categoryDropdown.innerHTML = '';
+  
+      categories.forEach(category => {
+        const option = document.createElement('option');
+        option.value = category.id;
+        option.textContent = category.name;
+        categoryDropdown.appendChild(option);
+      });
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  }
+  
+
+  addPhotoBtn.addEventListener('click', populateCategories);
+
+
 
