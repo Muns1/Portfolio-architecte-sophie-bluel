@@ -203,6 +203,10 @@ footer nav ul {
     text-align: center;
 }
 
+#restricted {
+	display: none;
+}
+
 #filters {
     display: flex;
     gap: 10px;
@@ -352,3 +356,8 @@ footer nav ul {
 .fa-trash-can:hover {
     color: rgb(247, 68, 68);
 }
+.restricted-content {
+	display: none;
+  }
+/* Add photo modal */
+

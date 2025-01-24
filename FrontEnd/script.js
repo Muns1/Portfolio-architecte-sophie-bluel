@@ -199,4 +199,84 @@ async function populateCategories() {
   addPhotoBtn.addEventListener('click', populateCategories);
 
 
+  document.getElementById('add-photo-form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+  
+    const form = event.target;
+    const formData = new FormData(form);
+  
+    const token = localStorage.getItem("authToken");
+  
+    try {
+      const response = await fetch('http://localhost:5678/api/works', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+  
+      if (response.ok) {
+        const newWork = await response.json();
+        console.log('New work added:', newWork);
+  
+        fetchWorks();
+  
+        document.getElementById('add-photo-modal').classList.remove('show');
+        form.reset();
+      } else {
+        const error = await response.json();
+        console.error('Error response:', error);
+        alert('Failed.');
+      }
+    } catch (error) {
+      console.error('Error adding new work:', error);
+      alert('Error, try again later.');
+    }
+  });
 
+
+
+  document.getElementById('image').addEventListener('change', function (event) {
+    const file = event.target.files[0];
+  
+    if (file) {
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+  
+        // Load the image file
+        reader.onload = function (e) {
+          const preview = document.getElementById('image-preview');
+          preview.src = e.target.result;
+          preview.classList.remove('hidden');
+        };
+  
+        reader.readAsDataURL(file);
+      } else {
+        alert('Please upload a valid image file.');
+      }
+    } else {
+      document.getElementById('image-preview').classList.add('hidden');
+      document.getElementById('image-preview').src = '';
+    }
+  });
+
+  function isLoggedIn() {
+    return localStorage.getItem('authToken') !== null;
+  }
+  
+  function showRestrictedContent() {
+    const restrictedElement = document.getElementById('restricted');
+  
+    if (restrictedElement) {
+      if (isLoggedIn()) {
+        console.log('User is logged in.');
+        restrictedElement.style.display = 'block';
+      } else {
+        console.log('User is not logged in.');
+        restrictedElement.style.display = 'none';
+      }
+    }
+  }
+  
+  document.addEventListener('DOMContentLoaded', showRestrictedContent);
