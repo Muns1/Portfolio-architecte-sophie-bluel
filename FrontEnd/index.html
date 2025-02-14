@@ -13,8 +13,8 @@
 	<script type="module" src="./script.js"></script>
 </head>
 <body>
-<div id="mode-edition restricted">
-	<p id="restricted">Mode édition</p>
+<div class="restricted" id="mode-edition">
+	<p class="restricted">Mode édition</p>
 </div>
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
@@ -44,11 +44,13 @@
 	  <h2>Ajout photo</h2>
 	  <form id="add-photo-form">
 		<div class="form-group">
-			<label for="image">Ajouter une photo</label>
+			<i class="fa-solid fa-image"></i>
+			<label for="image">Ajouter photo</label>
 			<input type="file" id="image" name="image" accept="image/*" required>
 		  </div>
 		  <div class="preview-container">
-			<img id="image-preview" class="hidden" alt="Preview of selected image">
+			<img id="image-preview" class="hidden-preview" alt="Preview of selected image">
+			<p class="upload-text">jpg, png : 4mo max</p>
 		  </div>
 		<div class="form-group">
 		  <label for="title">Titre:</label>
@@ -76,11 +78,13 @@
 		</article>
 	</section>
 	<section id="portfolio">
+		<section class="projets">
 		<h2>Mes Projets</h2>
-			<div id="modifier-btn">
-				<i id="restricted" class="fa-solid fa-pen-to-square"></i>
-				<p id="restricted">modifier</p>
-			</div>
+		<div id="modifier-btn">
+			<i class="fa-solid fa-pen-to-square restricted"></i>
+			<p class="restricted">modifier</p>
+		</div>
+		</section>
 		<div id="filters">
 			<!-- Les boutons de filtres seront générés ici -->
 		</div>

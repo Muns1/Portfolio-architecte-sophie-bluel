@@ -360,4 +360,69 @@ footer nav ul {
 	display: none;
   }
 /* Add photo modal */
+.add-photo-modal {
+	width: 100%;
+	height: 100%;
+	margin: 55px 105px;
+}
 
+#image-preview {
+	width: 100%;
+	height: 169px;
+	object-fit: contain;
+	background-color: #E8F1F6;
+}
+
+.hidden-preview {
+	display: none;
+}
+
+.hidden-modal {
+	display: none;
+}
+
+
+.form-group {
+	display: flex;
+	flex-direction: column;
+	margin-top: 30px;
+}
+
+#add-photo-modal .form-group label {
+	display: flex;
+	justify-content: flex-start;
+	font-family: 'Work Sans';
+	font-weight: 500;
+}
+
+input[type="text"], select {
+	border: transparent;
+	box-shadow: 0px 4px 14px 0px #00000017;
+	height: 51px;
+	margin-top: 10px;
+}
+
+.submit-btn {
+	font-family: 'Syne';
+	border-radius: 60px;
+	height: 36px;
+	width: 237px;
+	margin-top: 32px;
+	background-color: #A7A7A7;
+	border-color: transparent;
+	color: white;
+}
+
+
+.projets {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#modifier-btn {
+    display: flex;
+    align-items: center;
+	margin-top: -30px;
+	margin-left: 31px;
+}

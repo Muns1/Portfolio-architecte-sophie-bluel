@@ -244,7 +244,6 @@ async function populateCategories() {
       if (file.type.startsWith('image/')) {
         const reader = new FileReader();
   
-        // Load the image file
         reader.onload = function (e) {
           const preview = document.getElementById('image-preview');
           preview.src = e.target.result;
@@ -266,17 +265,35 @@ async function populateCategories() {
   }
   
   function showRestrictedContent() {
-    const restrictedElement = document.getElementById('restricted');
-  
-    if (restrictedElement) {
-      if (isLoggedIn()) {
-        console.log('User is logged in.');
-        restrictedElement.style.display = 'block';
-      } else {
-        console.log('User is not logged in.');
-        restrictedElement.style.display = 'none';
-      }
+    const restrictedElements = document.getElementsByClassName('restricted'); 
+
+    if (restrictedElements.length > 0) {
+        const displayStyle = isLoggedIn() ? 'block' : 'none';
+
+        for (let element of restrictedElements) {
+            element.style.display = displayStyle;
+        }
     }
-  }
+}
   
   document.addEventListener('DOMContentLoaded', showRestrictedContent);
+
+// Preview Fix
+document.addEventListener("DOMContentLoaded", function () {
+  const imageInput = document.getElementById("image");
+  const imagePreview = document.getElementById("image-preview");
+
+  imageInput.addEventListener("change", function (event) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        imagePreview.src = e.target.result;
+        imagePreview.classList.remove("hidden-preview"); 
+      };
+
+      reader.readAsDataURL(file);
+    }
+  });
+});
