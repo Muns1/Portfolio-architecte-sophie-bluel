@@ -281,6 +281,7 @@ footer nav ul {
     padding: 60px 105px;
     border-radius: 10px;
     width: 525px;
+	height: 525px;
     text-align: center;
     position: relative;
 }
@@ -425,4 +426,50 @@ input[type="text"], select {
     align-items: center;
 	margin-top: -30px;
 	margin-left: 31px;
+}
+
+
+.form-select {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 420px;
+	height: 169px;
+    padding: 30px;
+    background-color: #E8F1F6;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+	margin-top: 36px;
+}
+
+.form-select i {
+    font-size: 67px;
+    color: grey;
+    margin-bottom: 6px;
+}
+
+.form-select label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #306685;
+    cursor: pointer;
+    padding: 10px 20px;
+    background-color: #d1dce5;
+    border-radius: 50px;
+	margin-bottom: 7px;
+}
+
+
+.form-select label:hover {
+    background-color: #c0d3e3;
+}
+
+.form-select input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
 }
